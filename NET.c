@@ -111,9 +111,11 @@ void NET_receive_DLL(Network *packet, uint8_t rPacket[], uint8_t src_mac_address
         else if(rPacket[1] == 0x01){        // received a rebroadcast
 
             /* UPDATE TABLE */
+        	int f;
         	if(rPacket[2] == NEIGHBOUR_ADDRESS1){
         		if(packet->table_no == 0){
 					packet->first_place = NEIGHBOUR_ADDRESS1;
+					f = NEIGHBOUR_ADDRESS1;
         		}
         		else if(packet->table_no == 1){
         			packet->second_place = NEIGHBOUR_ADDRESS1;
@@ -123,6 +125,7 @@ void NET_receive_DLL(Network *packet, uint8_t rPacket[], uint8_t src_mac_address
         	else if(rPacket[2] == NEIGHBOUR_ADDRESS2){
         		if(packet->table_no == 0){
 					packet->first_place = NEIGHBOUR_ADDRESS2;
+					f = NEIGHBOUR_ADDRESS2;
         		}
         		else if(packet->table_no == 1){
         			packet->second_place = NEIGHBOUR_ADDRESS2;
@@ -132,6 +135,7 @@ void NET_receive_DLL(Network *packet, uint8_t rPacket[], uint8_t src_mac_address
 
                 /* set dest_mac_address */
         	packet->dest_mac_address = packet->first_place;
+        	printf("Quickest path to destination is through: %d", f);
 
             /* SEND DATA */
             if(rPacket[2] == packet->DEST){     // DEST could be replaced with sPacket[3]
