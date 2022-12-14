@@ -12,13 +12,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define LOCAL_ADDRESS 1
 #define NEIGHBOUR_ADDRESS1 2
 #define NEIGHBOUR_ADDRESS2 3
 #define HOP_LIMIT 0xFA
-#define CHECKSUM1 0x00
-#define CHECKSUM2 0x02
+#define CHECKSUM 0
 
 typedef struct
 {
@@ -51,12 +51,16 @@ typedef struct
       uint8_t second_place;
       uint8_t table_no;
 
-      uint8_t sPacket[];
+      uint8_t sPacket[138];
 
 } Network;
 
 void NET_receive_TRAN(Network *packet, uint8_t TRAN_Segment[], uint8_t seg_len, uint8_t DEST);
 
 void NET_receive_DLL(Network *packet, uint8_t rPacket[], uint8_t src_mac_address, uint8_t pack_len);
+
+void create_checksum(Network *packet, uint8_t seg_len, uint8_t check);
+
+bool checksum(Network *packet, uint8_t rPacket[], uint8_t check, uint8_t pack_len);
 
 #endif /* NET_H_ */
