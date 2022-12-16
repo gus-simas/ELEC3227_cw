@@ -36,7 +36,7 @@ typedef struct
       uint8_t seg_length;
 
       uint8_t src_mac_address;
-	  uint8_t dest_mac_address;
+	uint8_t dest_mac_address;
 
       uint8_t broadpack[9];
 

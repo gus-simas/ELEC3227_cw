@@ -99,8 +99,8 @@ ISR(TIMER2_COMPA_vect)
 	
 	if (attempts >= MAXIMUM_TRY_NUM)
 	{
+        put_str("\r\nGiving up resending the message now...\r\n");
 #if(DEBUG_MSG)
-		put_str("\r\nGiving up resending the	 message now...\r\n");
 		disable_timeout();
 		reset_attempts();
 		tl_retransmit_flag = tick = 0;
@@ -171,7 +171,7 @@ void TL_receive (const uint8_t dev, const tl_segment* rx_seg, transport* trans, 
     /* Handle ACK segment*/
     if ((int8_t)rx_seg->buf[1])
     {
-		put_str("In TRANSPORT, incoming package is ACK\r\n");
+		put_str("\n\rTRANS:   RECEIVED ACK\n\r");
         /* Check the sequence number is correct*/
         if ((int8_t)rx_seg->buf[1] != tx_sequence)
         {
@@ -194,7 +194,7 @@ void TL_receive (const uint8_t dev, const tl_segment* rx_seg, transport* trans, 
         return;
     }
 	
-	put_str("In TRANSPORT, incoming package not ACK\r\n");
+	put_str("\n\rTRANS:   PACKAGING ACK\n\r");
     /* Handle other segments */
     checksum = sum_checksum(len-2, rx_seg->buf);
 
